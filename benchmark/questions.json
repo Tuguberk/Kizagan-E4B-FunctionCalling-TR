@@ -1,0 +1,1789 @@
+{
+  "version": "1.0",
+  "description": "100 Türkçe tool-calling benchmark sorusu — Hermes Agentic format",
+  "categories": [
+    "hava_durumu", "web_arama", "takvim", "finans",
+    "e_ticaret", "harita", "akilli_ev", "muzik", "iletisim", "hesaplama"
+  ],
+  "questions": [
+
+    {
+      "id": 1, "category": "hava_durumu", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Belirtilen şehrin anlık hava durumunu getirir.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string", "description": "Şehir adı"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"], "description": "Sıcaklık birimi, varsayılan celsius"}
+          }, "required": ["city"]}
+        }}
+      ],
+      "query": "İstanbul'da bugün hava nasıl?",
+      "expected": {"name": "get_current_weather", "arguments": {"city": "İstanbul"}}
+    },
+
+    {
+      "id": 2, "category": "hava_durumu", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Belirtilen şehrin anlık hava durumunu getirir.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string", "description": "Şehir adı"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["city"]}
+        }}
+      ],
+      "query": "Ankara'da sıcaklık kaç derece?",
+      "expected": {"name": "get_current_weather", "arguments": {"city": "Ankara"}}
+    },
+
+    {
+      "id": 3, "category": "hava_durumu", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Anlık hava durumu.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["city"]}
+        }},
+        {"type": "function", "function": {
+          "name": "get_weather_forecast",
+          "description": "Gelecek günler için hava tahmini döndürür.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "days": {"type": "integer", "description": "Kaç günlük tahmin isteniyor (1-7)"}
+          }, "required": ["city", "days"]}
+        }}
+      ],
+      "query": "İzmir'de yarın yağmur yağacak mı?",
+      "expected": {"name": "get_weather_forecast", "arguments": {"city": "İzmir", "days": 1}}
+    },
+
+    {
+      "id": 4, "category": "hava_durumu", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Anlık hava durumu.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["city"]}
+        }},
+        {"type": "function", "function": {
+          "name": "get_weather_forecast",
+          "description": "Gelecek günler için hava tahmini.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "days": {"type": "integer"}
+          }, "required": ["city", "days"]}
+        }}
+      ],
+      "query": "Bursa için 5 günlük hava tahminini göster.",
+      "expected": {"name": "get_weather_forecast", "arguments": {"city": "Bursa", "days": 5}}
+    },
+
+    {
+      "id": 5, "category": "hava_durumu", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Anlık hava durumu.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["city"]}
+        }}
+      ],
+      "query": "Antalya'nın şu anki hava durumunu Fahrenheit olarak öğrenmek istiyorum.",
+      "expected": {"name": "get_current_weather", "arguments": {"city": "Antalya", "unit": "fahrenheit"}}
+    },
+
+    {
+      "id": 6, "category": "hava_durumu", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_weather_forecast",
+          "description": "Gelecek günler için hava tahmini.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "days": {"type": "integer"}
+          }, "required": ["city", "days"]}
+        }}
+      ],
+      "query": "Trabzon için 3 günlük tahmin lazım.",
+      "expected": {"name": "get_weather_forecast", "arguments": {"city": "Trabzon", "days": 3}}
+    },
+
+    {
+      "id": 7, "category": "hava_durumu", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Anlık hava durumu.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["city"]}
+        }}
+      ],
+      "query": "Konya'da hava nasıl?",
+      "expected": {"name": "get_current_weather", "arguments": {"city": "Konya"}}
+    },
+
+    {
+      "id": 8, "category": "hava_durumu", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Anlık hava durumu.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["city"]}
+        }},
+        {"type": "function", "function": {
+          "name": "get_weather_forecast",
+          "description": "Gelecek günler için hava tahmini.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "days": {"type": "integer"}
+          }, "required": ["city", "days"]}
+        }}
+      ],
+      "query": "Erzurum'da önümüzdeki hafta (7 gün) hava nasıl olacak?",
+      "expected": {"name": "get_weather_forecast", "arguments": {"city": "Erzurum", "days": 7}}
+    },
+
+    {
+      "id": 9, "category": "hava_durumu", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_current_weather",
+          "description": "Anlık hava durumu.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["city"]}
+        }}
+      ],
+      "query": "Van'ın hava durumunu Celsius cinsinden öğrenebilir miyim?",
+      "expected": {"name": "get_current_weather", "arguments": {"city": "Van", "unit": "celsius"}}
+    },
+
+    {
+      "id": 10, "category": "hava_durumu", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_weather_forecast",
+          "description": "Gelecek günler için hava tahmini.",
+          "parameters": {"type": "object", "properties": {
+            "city": {"type": "string"},
+            "days": {"type": "integer"}
+          }, "required": ["city", "days"]}
+        }}
+      ],
+      "query": "Adana için 2 günlük hava tahmini ver.",
+      "expected": {"name": "get_weather_forecast", "arguments": {"city": "Adana", "days": 2}}
+    },
+
+    {
+      "id": 11, "category": "web_arama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_web",
+          "description": "İnternette genel arama yapar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string", "description": "Arama sorgusu"},
+            "num_results": {"type": "integer", "description": "Döndürülecek sonuç sayısı", "default": 5}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Python ile web scraping nasıl yapılır?",
+      "expected": {"name": "search_web", "arguments": {"query": "Python web scraping"}}
+    },
+
+    {
+      "id": 12, "category": "web_arama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_news",
+          "description": "Haber sitelerinde arama yapar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string", "enum": ["genel", "spor", "ekonomi", "teknoloji", "siyaset"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Türkiye ekonomisiyle ilgili son haberleri göster.",
+      "expected": {"name": "search_news", "arguments": {"query": "Türkiye ekonomisi", "category": "ekonomi"}}
+    },
+
+    {
+      "id": 13, "category": "web_arama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_web",
+          "description": "İnternette genel arama yapar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "num_results": {"type": "integer"}
+          }, "required": ["query"]}
+        }},
+        {"type": "function", "function": {
+          "name": "search_news",
+          "description": "Haber arama.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "React JS öğrenmek için kaynak arıyorum.",
+      "expected": {"name": "search_web", "arguments": {"query": "React JS öğrenme kaynakları"}}
+    },
+
+    {
+      "id": 14, "category": "web_arama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_news",
+          "description": "Haber arama.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string", "enum": ["genel", "spor", "ekonomi", "teknoloji", "siyaset"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Yapay zeka alanındaki son teknoloji haberlerini getir.",
+      "expected": {"name": "search_news", "arguments": {"query": "yapay zeka", "category": "teknoloji"}}
+    },
+
+    {
+      "id": 15, "category": "web_arama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_web",
+          "description": "İnternette genel arama yapar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "num_results": {"type": "integer"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Sağlıklı kahvaltı tarifleri önerir misin?",
+      "expected": {"name": "search_web", "arguments": {"query": "sağlıklı kahvaltı tarifleri"}}
+    },
+
+    {
+      "id": 16, "category": "web_arama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_news",
+          "description": "Haber arama.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string", "enum": ["genel", "spor", "ekonomi", "teknoloji", "siyaset"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Galatasaray'ın son maç sonucunu öğrenmek istiyorum.",
+      "expected": {"name": "search_news", "arguments": {"query": "Galatasaray maç sonucu", "category": "spor"}}
+    },
+
+    {
+      "id": 17, "category": "web_arama", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_web",
+          "description": "İnternette genel arama yapar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "num_results": {"type": "integer"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "İstanbul'daki en iyi 10 Türk restoranını bulmak istiyorum.",
+      "expected": {"name": "search_web", "arguments": {"query": "İstanbul en iyi Türk restoranları", "num_results": 10}}
+    },
+
+    {
+      "id": 18, "category": "web_arama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_news",
+          "description": "Haber arama.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string", "enum": ["genel", "spor", "ekonomi", "teknoloji", "siyaset"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Türkiye'deki son siyasi gelişmeleri haber olarak göster.",
+      "expected": {"name": "search_news", "arguments": {"query": "Türkiye siyasi gelişmeler", "category": "siyaset"}}
+    },
+
+    {
+      "id": 19, "category": "web_arama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_web",
+          "description": "İnternette genel arama yapar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "num_results": {"type": "integer"}
+          }, "required": ["query"]}
+        }},
+        {"type": "function", "function": {
+          "name": "search_news",
+          "description": "Haber arama.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Docker ve Kubernetes arasındaki farkı anlatan makale arıyorum.",
+      "expected": {"name": "search_web", "arguments": {"query": "Docker Kubernetes fark karşılaştırma"}}
+    },
+
+    {
+      "id": 20, "category": "web_arama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_web",
+          "description": "İnternette genel arama yapar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "num_results": {"type": "integer"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Machine learning nedir? Arama yap.",
+      "expected": {"name": "search_web", "arguments": {"query": "machine learning nedir"}}
+    },
+
+    {
+      "id": 21, "category": "takvim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "create_calendar_event",
+          "description": "Takvime yeni etkinlik ekler.",
+          "parameters": {"type": "object", "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string", "description": "YYYY-MM-DD formatında tarih"},
+            "time": {"type": "string", "description": "HH:MM formatında saat"},
+            "location": {"type": "string"},
+            "duration_minutes": {"type": "integer"}
+          }, "required": ["title", "date", "time"]}
+        }},
+        {"type": "function", "function": {
+          "name": "get_calendar_events",
+          "description": "Belirtilen tarihteki etkinlikleri listeler.",
+          "parameters": {"type": "object", "properties": {
+            "date": {"type": "string", "description": "YYYY-MM-DD"}
+          }, "required": ["date"]}
+        }}
+      ],
+      "query": "27 Mayıs 2026 saat 10:00'da proje toplantısı oluştur.",
+      "expected": {"name": "create_calendar_event", "arguments": {"title": "proje toplantısı", "date": "2026-05-27", "time": "10:00"}}
+    },
+
+    {
+      "id": 22, "category": "takvim", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_calendar_events",
+          "description": "Belirtilen tarihteki etkinlikleri listeler.",
+          "parameters": {"type": "object", "properties": {
+            "date": {"type": "string"}
+          }, "required": ["date"]}
+        }}
+      ],
+      "query": "26 Mayıs 2026 tarihindeki randevularımı göster.",
+      "expected": {"name": "get_calendar_events", "arguments": {"date": "2026-05-26"}}
+    },
+
+    {
+      "id": 23, "category": "takvim", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "create_calendar_event",
+          "description": "Takvime yeni etkinlik ekler.",
+          "parameters": {"type": "object", "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string"},
+            "time": {"type": "string"},
+            "location": {"type": "string"},
+            "duration_minutes": {"type": "integer"}
+          }, "required": ["title", "date", "time"]}
+        }}
+      ],
+      "query": "28 Mayıs 2026 saat 14:30'da Kadıköy'de diş doktoru randevusu ekle, 45 dakika sürecek.",
+      "expected": {"name": "create_calendar_event", "arguments": {"title": "diş doktoru randevusu", "date": "2026-05-28", "time": "14:30", "location": "Kadıköy", "duration_minutes": 45}}
+    },
+
+    {
+      "id": 24, "category": "takvim", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_calendar_events",
+          "description": "Etkinlikleri listeler.",
+          "parameters": {"type": "object", "properties": {
+            "date": {"type": "string"}
+          }, "required": ["date"]}
+        }}
+      ],
+      "query": "Yarın (27 Mayıs 2026) ne var takvimde?",
+      "expected": {"name": "get_calendar_events", "arguments": {"date": "2026-05-27"}}
+    },
+
+    {
+      "id": 25, "category": "takvim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "create_calendar_event",
+          "description": "Takvime etkinlik ekler.",
+          "parameters": {"type": "object", "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string"},
+            "time": {"type": "string"},
+            "location": {"type": "string"},
+            "duration_minutes": {"type": "integer"}
+          }, "required": ["title", "date", "time"]}
+        }}
+      ],
+      "query": "1 Haziran 2026 saat 09:00'da iş görüşmesi takvime ekle.",
+      "expected": {"name": "create_calendar_event", "arguments": {"title": "iş görüşmesi", "date": "2026-06-01", "time": "09:00"}}
+    },
+
+    {
+      "id": 26, "category": "takvim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "create_calendar_event",
+          "description": "Takvime etkinlik ekler.",
+          "parameters": {"type": "object", "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string"},
+            "time": {"type": "string"},
+            "location": {"type": "string"},
+            "duration_minutes": {"type": "integer"}
+          }, "required": ["title", "date", "time"]}
+        }},
+        {"type": "function", "function": {
+          "name": "get_calendar_events",
+          "description": "Etkinlikleri listeler.",
+          "parameters": {"type": "object", "properties": {
+            "date": {"type": "string"}
+          }, "required": ["date"]}
+        }}
+      ],
+      "query": "29 Mayıs 2026 saat 19:00'da akşam yemeği etkinliği oluştur.",
+      "expected": {"name": "create_calendar_event", "arguments": {"title": "akşam yemeği", "date": "2026-05-29", "time": "19:00"}}
+    },
+
+    {
+      "id": 27, "category": "takvim", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_calendar_events",
+          "description": "Etkinlikleri listeler.",
+          "parameters": {"type": "object", "properties": {
+            "date": {"type": "string"}
+          }, "required": ["date"]}
+        }}
+      ],
+      "query": "28 Mayıs 2026 günkü programımı göster.",
+      "expected": {"name": "get_calendar_events", "arguments": {"date": "2026-05-28"}}
+    },
+
+    {
+      "id": 28, "category": "takvim", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "create_calendar_event",
+          "description": "Takvime etkinlik ekler.",
+          "parameters": {"type": "object", "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string"},
+            "time": {"type": "string"},
+            "location": {"type": "string"},
+            "duration_minutes": {"type": "integer"}
+          }, "required": ["title", "date", "time"]}
+        }}
+      ],
+      "query": "30 Mayıs 2026 saat 07:30'da Kadıköy Koşu Parkı'nda sabah sporu etkinliği ekle, 60 dakika sürecek.",
+      "expected": {"name": "create_calendar_event", "arguments": {"title": "sabah sporu", "date": "2026-05-30", "time": "07:30", "location": "Kadıköy Koşu Parkı", "duration_minutes": 60}}
+    },
+
+    {
+      "id": 29, "category": "takvim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "create_calendar_event",
+          "description": "Takvime etkinlik ekler.",
+          "parameters": {"type": "object", "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string"},
+            "time": {"type": "string"},
+            "location": {"type": "string"},
+            "duration_minutes": {"type": "integer"}
+          }, "required": ["title", "date", "time"]}
+        }}
+      ],
+      "query": "2 Haziran 2026 saat 11:00'da online konferans etkinliği oluştur, 120 dakika sürecek.",
+      "expected": {"name": "create_calendar_event", "arguments": {"title": "online konferans", "date": "2026-06-02", "time": "11:00", "duration_minutes": 120}}
+    },
+
+    {
+      "id": 30, "category": "takvim", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_calendar_events",
+          "description": "Etkinlikleri listeler.",
+          "parameters": {"type": "object", "properties": {
+            "date": {"type": "string"}
+          }, "required": ["date"]}
+        }}
+      ],
+      "query": "1 Haziran 2026 tarihindeki randevularımı listele.",
+      "expected": {"name": "get_calendar_events", "arguments": {"date": "2026-06-01"}}
+    },
+
+    {
+      "id": 31, "category": "finans", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_stock_price",
+          "description": "Hisse senedinin güncel fiyatını getirir.",
+          "parameters": {"type": "object", "properties": {
+            "symbol": {"type": "string", "description": "Hisse senedi sembolü (örn: AAPL, TSLA)"}
+          }, "required": ["symbol"]}
+        }}
+      ],
+      "query": "Apple'ın (AAPL) güncel hisse fiyatı nedir?",
+      "expected": {"name": "get_stock_price", "arguments": {"symbol": "AAPL"}}
+    },
+
+    {
+      "id": 32, "category": "finans", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_currency",
+          "description": "Para birimi dönüşümü yapar.",
+          "parameters": {"type": "object", "properties": {
+            "amount": {"type": "number"},
+            "from_currency": {"type": "string", "description": "Kaynak para birimi (örn: USD, EUR, TRY)"},
+            "to_currency": {"type": "string"}
+          }, "required": ["amount", "from_currency", "to_currency"]}
+        }}
+      ],
+      "query": "100 Amerikan doları kaç Türk lirası eder?",
+      "expected": {"name": "convert_currency", "arguments": {"amount": 100, "from_currency": "USD", "to_currency": "TRY"}}
+    },
+
+    {
+      "id": 33, "category": "finans", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate_loan",
+          "description": "Kredi geri ödeme planını hesaplar.",
+          "parameters": {"type": "object", "properties": {
+            "principal": {"type": "number", "description": "Ana para (TL)"},
+            "interest_rate": {"type": "number", "description": "Yıllık faiz oranı (%)"},
+            "term_months": {"type": "integer", "description": "Vade (ay)"}
+          }, "required": ["principal", "interest_rate", "term_months"]}
+        }}
+      ],
+      "query": "100.000 TL tutarında, yıllık %18.5 faizle 36 ay vadeli kredi için ödeme planı hesapla.",
+      "expected": {"name": "calculate_loan", "arguments": {"principal": 100000, "interest_rate": 18.5, "term_months": 36}}
+    },
+
+    {
+      "id": 34, "category": "finans", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_stock_price",
+          "description": "Hisse fiyatı getirir.",
+          "parameters": {"type": "object", "properties": {
+            "symbol": {"type": "string"}
+          }, "required": ["symbol"]}
+        }}
+      ],
+      "query": "Tesla hissesi (TSLA) şu an kaç dolardan işlem görüyor?",
+      "expected": {"name": "get_stock_price", "arguments": {"symbol": "TSLA"}}
+    },
+
+    {
+      "id": 35, "category": "finans", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_currency",
+          "description": "Para birimi dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "amount": {"type": "number"},
+            "from_currency": {"type": "string"},
+            "to_currency": {"type": "string"}
+          }, "required": ["amount", "from_currency", "to_currency"]}
+        }}
+      ],
+      "query": "50 Euro'yu Türk lirasına çevir.",
+      "expected": {"name": "convert_currency", "arguments": {"amount": 50, "from_currency": "EUR", "to_currency": "TRY"}}
+    },
+
+    {
+      "id": 36, "category": "finans", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_stock_price",
+          "description": "Hisse fiyatı.",
+          "parameters": {"type": "object", "properties": {
+            "symbol": {"type": "string"}
+          }, "required": ["symbol"]}
+        }}
+      ],
+      "query": "Google'ın (GOOGL) hisse senedi fiyatına bak.",
+      "expected": {"name": "get_stock_price", "arguments": {"symbol": "GOOGL"}}
+    },
+
+    {
+      "id": 37, "category": "finans", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_currency",
+          "description": "Para birimi dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "amount": {"type": "number"},
+            "from_currency": {"type": "string"},
+            "to_currency": {"type": "string"}
+          }, "required": ["amount", "from_currency", "to_currency"]}
+        }}
+      ],
+      "query": "1000 İngiliz sterlini kaç Amerikan doları eder?",
+      "expected": {"name": "convert_currency", "arguments": {"amount": 1000, "from_currency": "GBP", "to_currency": "USD"}}
+    },
+
+    {
+      "id": 38, "category": "finans", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate_loan",
+          "description": "Kredi hesaplama.",
+          "parameters": {"type": "object", "properties": {
+            "principal": {"type": "number"},
+            "interest_rate": {"type": "number"},
+            "term_months": {"type": "integer"}
+          }, "required": ["principal", "interest_rate", "term_months"]}
+        }}
+      ],
+      "query": "500.000 TL konut kredisi, yıllık %20 faiz, 120 ay vadeli için hesapla.",
+      "expected": {"name": "calculate_loan", "arguments": {"principal": 500000, "interest_rate": 20, "term_months": 120}}
+    },
+
+    {
+      "id": 39, "category": "finans", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_currency",
+          "description": "Para birimi dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "amount": {"type": "number"},
+            "from_currency": {"type": "string"},
+            "to_currency": {"type": "string"}
+          }, "required": ["amount", "from_currency", "to_currency"]}
+        }},
+        {"type": "function", "function": {
+          "name": "get_stock_price",
+          "description": "Hisse fiyatı.",
+          "parameters": {"type": "object", "properties": {
+            "symbol": {"type": "string"}
+          }, "required": ["symbol"]}
+        }}
+      ],
+      "query": "200 İsviçre frangını (CHF) Türk lirasına çevir.",
+      "expected": {"name": "convert_currency", "arguments": {"amount": 200, "from_currency": "CHF", "to_currency": "TRY"}}
+    },
+
+    {
+      "id": 40, "category": "finans", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_stock_price",
+          "description": "Hisse fiyatı.",
+          "parameters": {"type": "object", "properties": {
+            "symbol": {"type": "string"}
+          }, "required": ["symbol"]}
+        }}
+      ],
+      "query": "Microsoft'un (MSFT) hisse fiyatını göster.",
+      "expected": {"name": "get_stock_price", "arguments": {"symbol": "MSFT"}}
+    },
+
+    {
+      "id": 41, "category": "e_ticaret", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_products",
+          "description": "Ürün arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"},
+            "min_price": {"type": "number"},
+            "max_price": {"type": "number"},
+            "sort_by": {"type": "string", "enum": ["fiyat_artan", "fiyat_azalan", "puan", "yeni"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Elektronik kategorisinde laptop ara.",
+      "expected": {"name": "search_products", "arguments": {"query": "laptop", "category": "elektronik"}}
+    },
+
+    {
+      "id": 42, "category": "e_ticaret", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_products",
+          "description": "Ürün arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"},
+            "min_price": {"type": "number"},
+            "max_price": {"type": "number"},
+            "sort_by": {"type": "string", "enum": ["fiyat_artan", "fiyat_azalan", "puan", "yeni"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "5000 TL ile 15000 TL arasında fiyata göre artan sırayla akıllı telefon ara.",
+      "expected": {"name": "search_products", "arguments": {"query": "akıllı telefon", "min_price": 5000, "max_price": 15000, "sort_by": "fiyat_artan"}}
+    },
+
+    {
+      "id": 43, "category": "e_ticaret", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "add_to_cart",
+          "description": "Ürünü sepete ekler.",
+          "parameters": {"type": "object", "properties": {
+            "product_id": {"type": "string"},
+            "quantity": {"type": "integer"}
+          }, "required": ["product_id", "quantity"]}
+        }}
+      ],
+      "query": "P12345 ürününden 1 adet sepete ekle.",
+      "expected": {"name": "add_to_cart", "arguments": {"product_id": "P12345", "quantity": 1}}
+    },
+
+    {
+      "id": 44, "category": "e_ticaret", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_products",
+          "description": "Ürün arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"},
+            "min_price": {"type": "number"},
+            "max_price": {"type": "number"},
+            "sort_by": {"type": "string"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Kablosuz Bluetooth kulaklık ara.",
+      "expected": {"name": "search_products", "arguments": {"query": "kablosuz bluetooth kulaklık"}}
+    },
+
+    {
+      "id": 45, "category": "e_ticaret", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_products",
+          "description": "Ürün arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"},
+            "min_price": {"type": "number"},
+            "max_price": {"type": "number"},
+            "sort_by": {"type": "string"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Kitap kategorisinde yapay zeka konulu kitap ara, puana göre sırala.",
+      "expected": {"name": "search_products", "arguments": {"query": "yapay zeka", "category": "kitap", "sort_by": "puan"}}
+    },
+
+    {
+      "id": 46, "category": "e_ticaret", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_product_details",
+          "description": "Ürün detaylarını getirir.",
+          "parameters": {"type": "object", "properties": {
+            "product_id": {"type": "string"}
+          }, "required": ["product_id"]}
+        }},
+        {"type": "function", "function": {
+          "name": "add_to_cart",
+          "description": "Ürünü sepete ekler.",
+          "parameters": {"type": "object", "properties": {
+            "product_id": {"type": "string"},
+            "quantity": {"type": "integer"}
+          }, "required": ["product_id", "quantity"]}
+        }}
+      ],
+      "query": "A789 numaralı ürünün detaylarına bak.",
+      "expected": {"name": "get_product_details", "arguments": {"product_id": "A789"}}
+    },
+
+    {
+      "id": 47, "category": "e_ticaret", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "add_to_cart",
+          "description": "Ürünü sepete ekler.",
+          "parameters": {"type": "object", "properties": {
+            "product_id": {"type": "string"},
+            "quantity": {"type": "integer"}
+          }, "required": ["product_id", "quantity"]}
+        }}
+      ],
+      "query": "SKU-9876 kodlu üründen 3 adet sepetime ekle.",
+      "expected": {"name": "add_to_cart", "arguments": {"product_id": "SKU-9876", "quantity": 3}}
+    },
+
+    {
+      "id": 48, "category": "e_ticaret", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_products",
+          "description": "Ürün arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"},
+            "min_price": {"type": "number"},
+            "max_price": {"type": "number"},
+            "sort_by": {"type": "string"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Erkek spor ayakkabı ara, en yeniden eskiye sırala.",
+      "expected": {"name": "search_products", "arguments": {"query": "erkek spor ayakkabı", "sort_by": "yeni"}}
+    },
+
+    {
+      "id": 49, "category": "e_ticaret", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_product_details",
+          "description": "Ürün detayları.",
+          "parameters": {"type": "object", "properties": {
+            "product_id": {"type": "string"}
+          }, "required": ["product_id"]}
+        }}
+      ],
+      "query": "PROD-5544 ürününün özelliklerini ve fiyatını göster.",
+      "expected": {"name": "get_product_details", "arguments": {"product_id": "PROD-5544"}}
+    },
+
+    {
+      "id": 50, "category": "e_ticaret", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_products",
+          "description": "Ürün arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "category": {"type": "string"},
+            "min_price": {"type": "number"},
+            "max_price": {"type": "number"},
+            "sort_by": {"type": "string"}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Aksesuar kategorisinde 200 TL ile 800 TL arasında kadın çanta ara, fiyata göre azalan sırala.",
+      "expected": {"name": "search_products", "arguments": {"query": "kadın çanta", "category": "aksesuar", "min_price": 200, "max_price": 800, "sort_by": "fiyat_azalan"}}
+    },
+
+    {
+      "id": 51, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_directions",
+          "description": "İki nokta arasında yol tarifi verir.",
+          "parameters": {"type": "object", "properties": {
+            "origin": {"type": "string"},
+            "destination": {"type": "string"},
+            "transport_mode": {"type": "string", "enum": ["driving", "transit", "walking", "cycling"]}
+          }, "required": ["origin", "destination"]}
+        }},
+        {"type": "function", "function": {
+          "name": "calculate_distance",
+          "description": "İki nokta arasındaki mesafeyi hesaplar.",
+          "parameters": {"type": "object", "properties": {
+            "origin": {"type": "string"},
+            "destination": {"type": "string"},
+            "unit": {"type": "string", "enum": ["km", "mil"]}
+          }, "required": ["origin", "destination"]}
+        }}
+      ],
+      "query": "Kadıköy'den Taksim'e arabayla nasıl giderim?",
+      "expected": {"name": "get_directions", "arguments": {"origin": "Kadıköy", "destination": "Taksim", "transport_mode": "driving"}}
+    },
+
+    {
+      "id": 52, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "find_nearby_places",
+          "description": "Yakındaki yerleri bulur.",
+          "parameters": {"type": "object", "properties": {
+            "location": {"type": "string"},
+            "type": {"type": "string", "description": "Yer türü (restaurant, pharmacy, hospital, atm vb.)"},
+            "radius_meters": {"type": "integer"}
+          }, "required": ["location", "type"]}
+        }}
+      ],
+      "query": "Beşiktaş'ta 500 metre içindeki restoranları bul.",
+      "expected": {"name": "find_nearby_places", "arguments": {"location": "Beşiktaş", "type": "restaurant", "radius_meters": 500}}
+    },
+
+    {
+      "id": 53, "category": "harita", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate_distance",
+          "description": "İki nokta arası mesafe.",
+          "parameters": {"type": "object", "properties": {
+            "origin": {"type": "string"},
+            "destination": {"type": "string"},
+            "unit": {"type": "string", "enum": ["km", "mil"]}
+          }, "required": ["origin", "destination"]}
+        }}
+      ],
+      "query": "İstanbul ile Ankara arasındaki mesafe kaç km?",
+      "expected": {"name": "calculate_distance", "arguments": {"origin": "İstanbul", "destination": "Ankara", "unit": "km"}}
+    },
+
+    {
+      "id": 54, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_directions",
+          "description": "Yol tarifi.",
+          "parameters": {"type": "object", "properties": {
+            "origin": {"type": "string"},
+            "destination": {"type": "string"},
+            "transport_mode": {"type": "string", "enum": ["driving", "transit", "walking", "cycling"]}
+          }, "required": ["origin", "destination"]}
+        }}
+      ],
+      "query": "Üsküdar'dan Beyoğlu'na toplu taşımayla nasıl gidebilirim?",
+      "expected": {"name": "get_directions", "arguments": {"origin": "Üsküdar", "destination": "Beyoğlu", "transport_mode": "transit"}}
+    },
+
+    {
+      "id": 55, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "find_nearby_places",
+          "description": "Yakındaki yerleri bulur.",
+          "parameters": {"type": "object", "properties": {
+            "location": {"type": "string"},
+            "type": {"type": "string"},
+            "radius_meters": {"type": "integer"}
+          }, "required": ["location", "type"]}
+        }}
+      ],
+      "query": "Çankaya'da 1 kilometre yarıçapındaki eczaneleri bul.",
+      "expected": {"name": "find_nearby_places", "arguments": {"location": "Çankaya", "type": "pharmacy", "radius_meters": 1000}}
+    },
+
+    {
+      "id": 56, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_directions",
+          "description": "Yol tarifi.",
+          "parameters": {"type": "object", "properties": {
+            "origin": {"type": "string"},
+            "destination": {"type": "string"},
+            "transport_mode": {"type": "string", "enum": ["driving", "transit", "walking", "cycling"]}
+          }, "required": ["origin", "destination"]}
+        }}
+      ],
+      "query": "Sultanahmet'ten Kapalıçarşı'ya yürüyerek yol tarifi ver.",
+      "expected": {"name": "get_directions", "arguments": {"origin": "Sultanahmet", "destination": "Kapalıçarşı", "transport_mode": "walking"}}
+    },
+
+    {
+      "id": 57, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "find_nearby_places",
+          "description": "Yakındaki yerleri bulur.",
+          "parameters": {"type": "object", "properties": {
+            "location": {"type": "string"},
+            "type": {"type": "string"},
+            "radius_meters": {"type": "integer"}
+          }, "required": ["location", "type"]}
+        }}
+      ],
+      "query": "Bostancı'da 2 km çevresindeki hastaneleri listele.",
+      "expected": {"name": "find_nearby_places", "arguments": {"location": "Bostancı", "type": "hospital", "radius_meters": 2000}}
+    },
+
+    {
+      "id": 58, "category": "harita", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate_distance",
+          "description": "Mesafe hesaplama.",
+          "parameters": {"type": "object", "properties": {
+            "origin": {"type": "string"},
+            "destination": {"type": "string"},
+            "unit": {"type": "string", "enum": ["km", "mil"]}
+          }, "required": ["origin", "destination"]}
+        }}
+      ],
+      "query": "İzmir ile Ankara arasındaki uzaklığı kilometre cinsinden hesapla.",
+      "expected": {"name": "calculate_distance", "arguments": {"origin": "İzmir", "destination": "Ankara", "unit": "km"}}
+    },
+
+    {
+      "id": 59, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "find_nearby_places",
+          "description": "Yakındaki yerleri bulur.",
+          "parameters": {"type": "object", "properties": {
+            "location": {"type": "string"},
+            "type": {"type": "string"},
+            "radius_meters": {"type": "integer"}
+          }, "required": ["location", "type"]}
+        }}
+      ],
+      "query": "Levent'te 300 metre içinde ATM var mı, bul.",
+      "expected": {"name": "find_nearby_places", "arguments": {"location": "Levent", "type": "atm", "radius_meters": 300}}
+    },
+
+    {
+      "id": 60, "category": "harita", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_directions",
+          "description": "Yol tarifi.",
+          "parameters": {"type": "object", "properties": {
+            "origin": {"type": "string"},
+            "destination": {"type": "string"},
+            "transport_mode": {"type": "string", "enum": ["driving", "transit", "walking", "cycling"]}
+          }, "required": ["origin", "destination"]}
+        }}
+      ],
+      "query": "Fenerbahçe Parkı'ndan Caddebostan sahiline bisikletle yol tarifi.",
+      "expected": {"name": "get_directions", "arguments": {"origin": "Fenerbahçe Parkı", "destination": "Caddebostan", "transport_mode": "cycling"}}
+    },
+
+    {
+      "id": 61, "category": "akilli_ev", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_device",
+          "description": "Akıllı ev cihazını kontrol eder.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"},
+            "action": {"type": "string", "enum": ["on", "off", "open", "close", "lock", "unlock"]},
+            "value": {"type": "string", "description": "Opsiyonel değer (parlaklık, hız vb.)"}
+          }, "required": ["device_name", "action"]}
+        }}
+      ],
+      "query": "Salon lambasını aç.",
+      "expected": {"name": "control_device", "arguments": {"device_name": "salon_lambasi", "action": "on"}}
+    },
+
+    {
+      "id": 62, "category": "akilli_ev", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "set_thermostat",
+          "description": "Termostatt sıcaklık ayarı yapar.",
+          "parameters": {"type": "object", "properties": {
+            "temperature": {"type": "number"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["temperature"]}
+        }},
+        {"type": "function", "function": {
+          "name": "control_device",
+          "description": "Cihaz kontrolü.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"},
+            "action": {"type": "string", "enum": ["on", "off", "open", "close", "lock", "unlock"]},
+            "value": {"type": "string"}
+          }, "required": ["device_name", "action"]}
+        }}
+      ],
+      "query": "Termostatı 22 dereceye ayarla.",
+      "expected": {"name": "set_thermostat", "arguments": {"temperature": 22, "unit": "celsius"}}
+    },
+
+    {
+      "id": 63, "category": "akilli_ev", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_device",
+          "description": "Cihaz kontrolü.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"},
+            "action": {"type": "string", "enum": ["on", "off", "open", "close", "lock", "unlock"]},
+            "value": {"type": "string"}
+          }, "required": ["device_name", "action"]}
+        }}
+      ],
+      "query": "Televizyonu kapat.",
+      "expected": {"name": "control_device", "arguments": {"device_name": "televizyon", "action": "off"}}
+    },
+
+    {
+      "id": 64, "category": "akilli_ev", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_device",
+          "description": "Cihaz kontrolü.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"},
+            "action": {"type": "string", "enum": ["on", "off", "open", "close", "lock", "unlock"]},
+            "value": {"type": "string"}
+          }, "required": ["device_name", "action"]}
+        }}
+      ],
+      "query": "Ön kapıyı kilitle.",
+      "expected": {"name": "control_device", "arguments": {"device_name": "on_kapi", "action": "lock"}}
+    },
+
+    {
+      "id": 65, "category": "akilli_ev", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "set_thermostat",
+          "description": "Termostat ayarı.",
+          "parameters": {"type": "object", "properties": {
+            "temperature": {"type": "number"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["temperature"]}
+        }}
+      ],
+      "query": "Isıtmayı 18 santigrat dereceye düşür.",
+      "expected": {"name": "set_thermostat", "arguments": {"temperature": 18, "unit": "celsius"}}
+    },
+
+    {
+      "id": 66, "category": "akilli_ev", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_device",
+          "description": "Cihaz kontrolü.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"},
+            "action": {"type": "string", "enum": ["on", "off", "open", "close", "lock", "unlock"]},
+            "value": {"type": "string"}
+          }, "required": ["device_name", "action"]}
+        }}
+      ],
+      "query": "Yatak odası lambasını kapat.",
+      "expected": {"name": "control_device", "arguments": {"device_name": "yatak_odasi_lambasi", "action": "off"}}
+    },
+
+    {
+      "id": 67, "category": "akilli_ev", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_device_status",
+          "description": "Cihazın durumunu sorgular.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"}
+          }, "required": ["device_name"]}
+        }}
+      ],
+      "query": "Klimanın durumu nedir?",
+      "expected": {"name": "get_device_status", "arguments": {"device_name": "klima"}}
+    },
+
+    {
+      "id": 68, "category": "akilli_ev", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_device",
+          "description": "Cihaz kontrolü.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"},
+            "action": {"type": "string", "enum": ["on", "off", "open", "close", "lock", "unlock"]},
+            "value": {"type": "string"}
+          }, "required": ["device_name", "action"]}
+        }}
+      ],
+      "query": "Perdeni aç.",
+      "expected": {"name": "control_device", "arguments": {"device_name": "perde", "action": "open"}}
+    },
+
+    {
+      "id": 69, "category": "akilli_ev", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "get_device_status",
+          "description": "Cihaz durumu sorgulama.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"}
+          }, "required": ["device_name"]}
+        }}
+      ],
+      "query": "Güvenlik kamerasının çalışıp çalışmadığını kontrol et.",
+      "expected": {"name": "get_device_status", "arguments": {"device_name": "guvenlik_kamerasi"}}
+    },
+
+    {
+      "id": 70, "category": "akilli_ev", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "set_thermostat",
+          "description": "Termostat ayarı.",
+          "parameters": {"type": "object", "properties": {
+            "temperature": {"type": "number"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          }, "required": ["temperature"]}
+        }},
+        {"type": "function", "function": {
+          "name": "control_device",
+          "description": "Cihaz kontrolü.",
+          "parameters": {"type": "object", "properties": {
+            "device_name": {"type": "string"},
+            "action": {"type": "string", "enum": ["on", "off", "open", "close", "lock", "unlock"]},
+            "value": {"type": "string"}
+          }, "required": ["device_name", "action"]}
+        }}
+      ],
+      "query": "Termostatı 25 dereceye ayarla.",
+      "expected": {"name": "set_thermostat", "arguments": {"temperature": 25, "unit": "celsius"}}
+    },
+
+    {
+      "id": 71, "category": "muzik", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "play_music",
+          "description": "Müzik çalar.",
+          "parameters": {"type": "object", "properties": {
+            "song": {"type": "string"},
+            "artist": {"type": "string"},
+            "playlist": {"type": "string"},
+            "genre": {"type": "string"}
+          }, "required": []}
+        }}
+      ],
+      "query": "Tarkan'ın şarkılarını çal.",
+      "expected": {"name": "play_music", "arguments": {"artist": "Tarkan"}}
+    },
+
+    {
+      "id": 72, "category": "muzik", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_music",
+          "description": "Müzik arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "type": {"type": "string", "enum": ["song", "artist", "album", "playlist"]}
+          }, "required": ["query"]}
+        }},
+        {"type": "function", "function": {
+          "name": "play_music",
+          "description": "Müzik çalar.",
+          "parameters": {"type": "object", "properties": {
+            "song": {"type": "string"},
+            "artist": {"type": "string"},
+            "playlist": {"type": "string"},
+            "genre": {"type": "string"}
+          }, "required": []}
+        }}
+      ],
+      "query": "Sezen Aksu'ya ait sanatçı bilgilerini ara.",
+      "expected": {"name": "search_music", "arguments": {"query": "Sezen Aksu", "type": "artist"}}
+    },
+
+    {
+      "id": 73, "category": "muzik", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "play_music",
+          "description": "Müzik çalar.",
+          "parameters": {"type": "object", "properties": {
+            "song": {"type": "string"},
+            "artist": {"type": "string"},
+            "playlist": {"type": "string"},
+            "genre": {"type": "string"}
+          }, "required": []}
+        }}
+      ],
+      "query": "Türk pop müzik listesini çal.",
+      "expected": {"name": "play_music", "arguments": {"playlist": "Türk Pop"}}
+    },
+
+    {
+      "id": 74, "category": "muzik", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_playback",
+          "description": "Müzik çaları kontrol eder.",
+          "parameters": {"type": "object", "properties": {
+            "action": {"type": "string", "enum": ["play", "pause", "resume", "stop", "next", "previous"]}
+          }, "required": ["action"]}
+        }}
+      ],
+      "query": "Müziği duraklat.",
+      "expected": {"name": "control_playback", "arguments": {"action": "pause"}}
+    },
+
+    {
+      "id": 75, "category": "muzik", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_playback",
+          "description": "Müzik çaları kontrol.",
+          "parameters": {"type": "object", "properties": {
+            "action": {"type": "string", "enum": ["play", "pause", "resume", "stop", "next", "previous"]}
+          }, "required": ["action"]}
+        }}
+      ],
+      "query": "Müziği devam ettir.",
+      "expected": {"name": "control_playback", "arguments": {"action": "resume"}}
+    },
+
+    {
+      "id": 76, "category": "muzik", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_playback",
+          "description": "Müzik çaları kontrol.",
+          "parameters": {"type": "object", "properties": {
+            "action": {"type": "string", "enum": ["play", "pause", "resume", "stop", "next", "previous"]}
+          }, "required": ["action"]}
+        }}
+      ],
+      "query": "Sonraki şarkıya geç.",
+      "expected": {"name": "control_playback", "arguments": {"action": "next"}}
+    },
+
+    {
+      "id": 77, "category": "muzik", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_music",
+          "description": "Müzik arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "type": {"type": "string", "enum": ["song", "artist", "album", "playlist"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Tarkan'ın 'Şımarık' adlı şarkısını ara.",
+      "expected": {"name": "search_music", "arguments": {"query": "Tarkan Şımarık", "type": "song"}}
+    },
+
+    {
+      "id": 78, "category": "muzik", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "control_playback",
+          "description": "Müzik çaları kontrol.",
+          "parameters": {"type": "object", "properties": {
+            "action": {"type": "string", "enum": ["play", "pause", "resume", "stop", "next", "previous"]}
+          }, "required": ["action"]}
+        }}
+      ],
+      "query": "Müziği tamamen kapat.",
+      "expected": {"name": "control_playback", "arguments": {"action": "stop"}}
+    },
+
+    {
+      "id": 79, "category": "muzik", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "play_music",
+          "description": "Müzik çalar.",
+          "parameters": {"type": "object", "properties": {
+            "song": {"type": "string"},
+            "artist": {"type": "string"},
+            "playlist": {"type": "string"},
+            "genre": {"type": "string"}
+          }, "required": []}
+        }}
+      ],
+      "query": "Caz müzik listesi çal.",
+      "expected": {"name": "play_music", "arguments": {"playlist": "Caz"}}
+    },
+
+    {
+      "id": 80, "category": "muzik", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "search_music",
+          "description": "Müzik arar.",
+          "parameters": {"type": "object", "properties": {
+            "query": {"type": "string"},
+            "type": {"type": "string", "enum": ["song", "artist", "album", "playlist"]}
+          }, "required": ["query"]}
+        }}
+      ],
+      "query": "Sertab Erener'in albümlerini ara.",
+      "expected": {"name": "search_music", "arguments": {"query": "Sertab Erener", "type": "album"}}
+    },
+
+    {
+      "id": 81, "category": "iletisim", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "send_email",
+          "description": "E-posta gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "to": {"type": "string"},
+            "subject": {"type": "string"},
+            "body": {"type": "string"},
+            "cc": {"type": "string"}
+          }, "required": ["to", "subject", "body"]}
+        }}
+      ],
+      "query": "ahmet@sirket.com adresine 'Toplantı Hatırlatması' konusuyla 'Yarın saat 10:00 toplantımız var.' içerikli mail gönder.",
+      "expected": {"name": "send_email", "arguments": {"to": "ahmet@sirket.com", "subject": "Toplantı Hatırlatması", "body": "Yarın saat 10:00 toplantımız var."}}
+    },
+
+    {
+      "id": 82, "category": "iletisim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "send_sms",
+          "description": "SMS gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "phone_number": {"type": "string"},
+            "message": {"type": "string"}
+          }, "required": ["phone_number", "message"]}
+        }}
+      ],
+      "query": "0555 123 45 67 numarasına 'Birazdan geleceğim.' mesajı gönder.",
+      "expected": {"name": "send_sms", "arguments": {"phone_number": "05551234567", "message": "Birazdan geleceğim."}}
+    },
+
+    {
+      "id": 83, "category": "iletisim", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "make_call",
+          "description": "Telefon araması yapar.",
+          "parameters": {"type": "object", "properties": {
+            "phone_number": {"type": "string"},
+            "contact_name": {"type": "string"}
+          }, "required": ["phone_number"]}
+        }}
+      ],
+      "query": "0312 555 55 55 numarasını ara.",
+      "expected": {"name": "make_call", "arguments": {"phone_number": "03125555555"}}
+    },
+
+    {
+      "id": 84, "category": "iletisim", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "send_email",
+          "description": "E-posta gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "to": {"type": "string"},
+            "subject": {"type": "string"},
+            "body": {"type": "string"},
+            "cc": {"type": "string"}
+          }, "required": ["to", "subject", "body"]}
+        }}
+      ],
+      "query": "manager@firma.com'a 'Aylık Rapor' konusuyla 'Kasım ayı satış raporu ekte bulunmaktadır.' yazısını gönder.",
+      "expected": {"name": "send_email", "arguments": {"to": "manager@firma.com", "subject": "Aylık Rapor", "body": "Kasım ayı satış raporu ekte bulunmaktadır."}}
+    },
+
+    {
+      "id": 85, "category": "iletisim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "send_sms",
+          "description": "SMS gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "phone_number": {"type": "string"},
+            "message": {"type": "string"}
+          }, "required": ["phone_number", "message"]}
+        }}
+      ],
+      "query": "0533 987 65 43 numarasına 'Toplantı iptal edildi.' SMS'i at.",
+      "expected": {"name": "send_sms", "arguments": {"phone_number": "05339876543", "message": "Toplantı iptal edildi."}}
+    },
+
+    {
+      "id": 86, "category": "iletisim", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "make_call",
+          "description": "Telefon araması.",
+          "parameters": {"type": "object", "properties": {
+            "phone_number": {"type": "string"},
+            "contact_name": {"type": "string"}
+          }, "required": ["phone_number"]}
+        }}
+      ],
+      "query": "Ahmet'i ara, telefon numarası 0532 111 22 33.",
+      "expected": {"name": "make_call", "arguments": {"phone_number": "05321112233", "contact_name": "Ahmet"}}
+    },
+
+    {
+      "id": 87, "category": "iletisim", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "send_email",
+          "description": "E-posta gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "to": {"type": "string"},
+            "subject": {"type": "string"},
+            "body": {"type": "string"},
+            "cc": {"type": "string"}
+          }, "required": ["to", "subject", "body"]}
+        }}
+      ],
+      "query": "info@okul.edu.tr adresine 'Kayıt Başvurusu' konusuyla 'Kayıt belgelerimi iletiyorum.' mesajı gönder, cc'ye sekreter@okul.edu.tr ekle.",
+      "expected": {"name": "send_email", "arguments": {"to": "info@okul.edu.tr", "subject": "Kayıt Başvurusu", "body": "Kayıt belgelerimi iletiyorum.", "cc": "sekreter@okul.edu.tr"}}
+    },
+
+    {
+      "id": 88, "category": "iletisim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "send_sms",
+          "description": "SMS gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "phone_number": {"type": "string"},
+            "message": {"type": "string"}
+          }, "required": ["phone_number", "message"]}
+        }}
+      ],
+      "query": "0216 444 44 44'e 'Paket teslim alındı.' mesajı gönder.",
+      "expected": {"name": "send_sms", "arguments": {"phone_number": "02164444444", "message": "Paket teslim alındı."}}
+    },
+
+    {
+      "id": 89, "category": "iletisim", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "make_call",
+          "description": "Telefon araması.",
+          "parameters": {"type": "object", "properties": {
+            "phone_number": {"type": "string"},
+            "contact_name": {"type": "string"}
+          }, "required": ["phone_number"]}
+        }},
+        {"type": "function", "function": {
+          "name": "send_sms",
+          "description": "SMS gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "phone_number": {"type": "string"},
+            "message": {"type": "string"}
+          }, "required": ["phone_number", "message"]}
+        }}
+      ],
+      "query": "0850 222 00 00 numarasını ara.",
+      "expected": {"name": "make_call", "arguments": {"phone_number": "08502220000"}}
+    },
+
+    {
+      "id": 90, "category": "iletisim", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "send_email",
+          "description": "E-posta gönderir.",
+          "parameters": {"type": "object", "properties": {
+            "to": {"type": "string"},
+            "subject": {"type": "string"},
+            "body": {"type": "string"},
+            "cc": {"type": "string"}
+          }, "required": ["to", "subject", "body"]}
+        }}
+      ],
+      "query": "destek@uygulama.com adresine 'Hata Bildirimi' konusuyla 'Uygulamada giriş yapamıyorum, lütfen yardımcı olun.' içeriğiyle mail at.",
+      "expected": {"name": "send_email", "arguments": {"to": "destek@uygulama.com", "subject": "Hata Bildirimi", "body": "Uygulamada giriş yapamıyorum, lütfen yardımcı olun."}}
+    },
+
+    {
+      "id": 91, "category": "hesaplama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate",
+          "description": "Matematiksel ifadeyi hesaplar.",
+          "parameters": {"type": "object", "properties": {
+            "expression": {"type": "string", "description": "Hesaplanacak matematiksel ifade"}
+          }, "required": ["expression"]}
+        }}
+      ],
+      "query": "15 çarpı 8 kaç eder?",
+      "expected": {"name": "calculate", "arguments": {"expression": "15 * 8"}}
+    },
+
+    {
+      "id": 92, "category": "hesaplama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_units",
+          "description": "Birim dönüşümü yapar.",
+          "parameters": {"type": "object", "properties": {
+            "value": {"type": "number"},
+            "from_unit": {"type": "string"},
+            "to_unit": {"type": "string"}
+          }, "required": ["value", "from_unit", "to_unit"]}
+        }}
+      ],
+      "query": "5 kilometre kaç metredir?",
+      "expected": {"name": "convert_units", "arguments": {"value": 5, "from_unit": "km", "to_unit": "m"}}
+    },
+
+    {
+      "id": 93, "category": "hesaplama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate",
+          "description": "Matematiksel ifade hesaplama.",
+          "parameters": {"type": "object", "properties": {
+            "expression": {"type": "string"}
+          }, "required": ["expression"]}
+        }}
+      ],
+      "query": "144'ün karekökünü hesapla.",
+      "expected": {"name": "calculate", "arguments": {"expression": "sqrt(144)"}}
+    },
+
+    {
+      "id": 94, "category": "hesaplama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_units",
+          "description": "Birim dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "value": {"type": "number"},
+            "from_unit": {"type": "string"},
+            "to_unit": {"type": "string"}
+          }, "required": ["value", "from_unit", "to_unit"]}
+        }}
+      ],
+      "query": "100 santigrat dereceyi Fahrenheit'a çevir.",
+      "expected": {"name": "convert_units", "arguments": {"value": 100, "from_unit": "celsius", "to_unit": "fahrenheit"}}
+    },
+
+    {
+      "id": 95, "category": "hesaplama", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate",
+          "description": "Matematiksel ifade hesaplama.",
+          "parameters": {"type": "object", "properties": {
+            "expression": {"type": "string"}
+          }, "required": ["expression"]}
+        }}
+      ],
+      "query": "(100 artı 200) çarpı 3 nedir?",
+      "expected": {"name": "calculate", "arguments": {"expression": "(100 + 200) * 3"}}
+    },
+
+    {
+      "id": 96, "category": "hesaplama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_units",
+          "description": "Birim dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "value": {"type": "number"},
+            "from_unit": {"type": "string"},
+            "to_unit": {"type": "string"}
+          }, "required": ["value", "from_unit", "to_unit"]}
+        }}
+      ],
+      "query": "70 kilogramı pound'a çevir.",
+      "expected": {"name": "convert_units", "arguments": {"value": 70, "from_unit": "kg", "to_unit": "pound"}}
+    },
+
+    {
+      "id": 97, "category": "hesaplama", "difficulty": "easy",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate",
+          "description": "Matematiksel hesaplama.",
+          "parameters": {"type": "object", "properties": {
+            "expression": {"type": "string"}
+          }, "required": ["expression"]}
+        }}
+      ],
+      "query": "2 üzeri 10 kaç eder?",
+      "expected": {"name": "calculate", "arguments": {"expression": "2 ** 10"}}
+    },
+
+    {
+      "id": 98, "category": "hesaplama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_units",
+          "description": "Birim dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "value": {"type": "number"},
+            "from_unit": {"type": "string"},
+            "to_unit": {"type": "string"}
+          }, "required": ["value", "from_unit", "to_unit"]}
+        }}
+      ],
+      "query": "10 metreyi feet'e (ayak) çevir.",
+      "expected": {"name": "convert_units", "arguments": {"value": 10, "from_unit": "m", "to_unit": "ft"}}
+    },
+
+    {
+      "id": 99, "category": "hesaplama", "difficulty": "hard",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "calculate",
+          "description": "Matematiksel hesaplama.",
+          "parameters": {"type": "object", "properties": {
+            "expression": {"type": "string"}
+          }, "required": ["expression"]}
+        }},
+        {"type": "function", "function": {
+          "name": "convert_units",
+          "description": "Birim dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "value": {"type": "number"},
+            "from_unit": {"type": "string"},
+            "to_unit": {"type": "string"}
+          }, "required": ["value", "from_unit", "to_unit"]}
+        }}
+      ],
+      "query": "32 bölü 4 artı 17 çarpı 3 işlemini hesapla.",
+      "expected": {"name": "calculate", "arguments": {"expression": "32 / 4 + 17 * 3"}}
+    },
+
+    {
+      "id": 100, "category": "hesaplama", "difficulty": "medium",
+      "tools": [
+        {"type": "function", "function": {
+          "name": "convert_units",
+          "description": "Birim dönüşümü.",
+          "parameters": {"type": "object", "properties": {
+            "value": {"type": "number"},
+            "from_unit": {"type": "string"},
+            "to_unit": {"type": "string"}
+          }, "required": ["value", "from_unit", "to_unit"]}
+        }}
+      ],
+      "query": "20 litreyi galona çevir.",
+      "expected": {"name": "convert_units", "arguments": {"value": 20, "from_unit": "litre", "to_unit": "galon"}}
+    }
+
+  ]
+}
